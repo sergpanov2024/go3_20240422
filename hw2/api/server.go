@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/sergpanov2024/go3_20240422/hw1/db/sqlc"
-	"github.com/sergpanov2024/go3_20240422/hw1/token"
-	"github.com/sergpanov2024/go3_20240422/hw1/util"
+	db "github.com/sergpanov2024/go3_20240422/hw2/db/sqlc"
+	"github.com/sergpanov2024/go3_20240422/hw2/token"
+	"github.com/sergpanov2024/go3_20240422/hw2/util"
 )
 
 type Server struct {

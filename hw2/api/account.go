@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
-	db "github.com/sergpanov2024/go3_20240422/hw1/db/sqlc"
+	db "github.com/sergpanov2024/go3_20240422/hw2/db/sqlc"
 )
 
 type CreateAccountRequest struct {
@@ -72,7 +72,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 	}
 
 	arg := db.ListAccountsParams{
-		Limit: req.PageSize,
+		Limit:  req.PageSize,
 		Offset: (req.PageID - 1) * req.PageSize,
 	}
 
@@ -111,7 +111,6 @@ func (server *Server) updateAccount(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, account)
 }
-
 
 type deleteAccountRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
