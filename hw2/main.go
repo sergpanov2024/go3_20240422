@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/sergpanov2024/go3_20240422/hw2/api"
-	db "github.com/sergpanov2024/go3_20240422/hw2/db/sqlc"
-	"github.com/sergpanov2024/go3_20240422/hw2/util"
+	"github.com/sergpanov2024/go3/hw2/api"
+	db "github.com/sergpanov2024/go3/hw2/db/sqlc"
+	"github.com/sergpanov2024/go3/hw2/util"
 )
 
 // github.com/sergpanov2024/go3_20240422/hw2

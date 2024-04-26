@@ -3,12 +3,13 @@ package api
 import (
 	"errors"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgtype"
-	db "github.com/sergpanov2024/go3_20240422/hw2/db/sqlc"
-	"github.com/sergpanov2024/go3_20240422/hw2/util"
+	db "github.com/sergpanov2024/go3/hw2/db/sqlc"
+	"github.com/sergpanov2024/go3/hw2/util"
 )
 
 type createUserRequest struct {

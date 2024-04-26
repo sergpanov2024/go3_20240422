@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
-	db "github.com/sergpanov2024/go3_20240422/hw2/db/sqlc"
+	db "github.com/sergpanov2024/go3/hw2/db/sqlc"
 )
 
 type CreateAccountRequest struct {
