@@ -4,7 +4,9 @@
       <h2>Навыки:</h2>
    </div>
    <div class="text-left">
-    {{range .}} <p> {{print .}} </p> {{end}}
+    <ul>
+    {{range .}} <li> {{print .}} </li> {{end}}
+    </ul>
    </div>
    
 {{ end }}
