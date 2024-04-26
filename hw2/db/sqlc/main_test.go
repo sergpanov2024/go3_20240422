@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/sergpanov2024/go3_20240422/hw1/util"
+	"github.com/sergpanov2024/go3/hw1/util"
 )
 
 var testDB *pgxpool.Pool

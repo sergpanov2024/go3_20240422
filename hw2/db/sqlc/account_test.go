@@ -12,7 +12,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/stretchr/testify/require"
-	"github.com/sergpanov2024/go3_20240422/hw1/util"
+	"github.com/sergpanov2024/go3/hw1/util"
 )
 
 func TestCreateAccount(t *testing.T) {

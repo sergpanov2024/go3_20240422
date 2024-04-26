@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sergpanov2024/go3/util"
 	"github.com/stretchr/testify/require"
-	"github.com/vadshi/go3/bankstore/util"
 )
 
 func createRandomUser(t *testing.T) User {
