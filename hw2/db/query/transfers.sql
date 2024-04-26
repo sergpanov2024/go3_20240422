@@ -29,8 +29,11 @@ WHERE id = $1
 RETURNING *;
 
 
--- name: procTransferTx :exec
-call procTransferTx (  $1, $2, $3 );
+-- name: procTransferTx :one
+select * from TransferTxResult union all
+select * from  proctransfertx($1,$2,$3) t(q1,q2,q3,q4,q5) union all 
+select * from TransferTxResult 
+;
 
 
 

@@ -1,1 +1,1 @@
-drop procedure procTransferTx;
+drop function procTransferTx;

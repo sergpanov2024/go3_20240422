@@ -78,6 +78,14 @@ type Transfer struct {
 	CreatedAt pgtype.Timestamptz `json:"created_at"`
 }
 
+type Transfertxresult struct {
+	Transfer    pgtype.Int8 `json:"transfer"`
+	Fromaccount pgtype.Int8 `json:"fromaccount"`
+	Toaccount   pgtype.Int8 `json:"toaccount"`
+	Fromentry   pgtype.Int8 `json:"fromentry"`
+	Toentry     pgtype.Int8 `json:"toentry"`
+}
+
 type User struct {
 	Username          string             `json:"username"`
 	HashedPassword    string             `json:"hashed_password"`

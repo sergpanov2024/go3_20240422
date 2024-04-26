@@ -22,7 +22,6 @@ func TestTransferTx(t *testing.T) {
 	errs := make(chan error)
 	results := make(chan TransferTxResult)
 
-
 	// run n concurrent transfer transaction
 	for i := 0; i < n; i++ {
 		txName := fmt.Sprintf("tx %d", i+1)
@@ -30,9 +29,9 @@ func TestTransferTx(t *testing.T) {
 			var txKey = struct{}{}
 			ctx := context.WithValue(context.Background(), txKey, txName)
 			result, err := store.TransferTx(ctx, procTransferTxParams{
-				FromAccountID: account1.ID,
-				ToAccountID:   account2.ID,
-				Amount:        amount,
+				FromAcc: account1.ID,
+				ToAcc:   account2.ID,
+				Amount:  amount,
 			})
 			errs <- err
 			results <- result

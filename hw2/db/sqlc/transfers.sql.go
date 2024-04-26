@@ -141,17 +141,27 @@ func (q *Queries) UpdateTransfer(ctx context.Context, arg UpdateTransferParams) 
 	return i, err
 }
 
-const procTransferTx = `-- name: procTransferTx :exec
-call procTransferTx (  $1, $2, $3 )
+const procTransferTx = `-- name: procTransferTx :one
+select transfer, fromaccount, toaccount, fromentry, toentry from TransferTxResult union all
+select q1, q2, q3, q4, q5 from  proctransfertx($1,$2,$3) t(q1,q2,q3,q4,q5) union all 
+select transfer, fromaccount, toaccount, fromentry, toentry from TransferTxResult
 `
 
 type procTransferTxParams struct {
-	FromAccountID int64 `json:"from_account_id"`
-	ToAccountID   int64 `json:"to_account_id"`
+	FromAcc int64 `json:"from_acc"`
+	ToAcc   int64 `json:"to_acc"`
 	Amount  int64 `json:"amount"`
 }
 
-func (q *Queries) procTransferTx(ctx context.Context, arg procTransferTxParams) error {
-	_, err := q.db.Exec(ctx, procTransferTx, arg.FromAccountID, arg.ToAccountID, arg.Amount)
-	return err
+func (q *Queries) procTransferTx(ctx context.Context, arg procTransferTxParams) (Transfertxresult, error) {
+	row := q.db.QueryRow(ctx, procTransferTx, arg.FromAcc, arg.ToAcc, arg.Amount)
+	var i Transfertxresult
+	err := row.Scan(
+		&i.Transfer,
+		&i.Fromaccount,
+		&i.Toaccount,
+		&i.Fromentry,
+		&i.Toentry,
+	)
+	return i, err
 }

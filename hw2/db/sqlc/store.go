@@ -94,16 +94,13 @@ func AddMoney(
 // 	return err
 // }
 
-func (q *Queries) TransferTx(ctx context.Context, arg procTransferTxParams) (res TransferTxResult, err error) {
-	err = q.procTransferTx(ctx, procTransferTxParams{
-		FromAccountID: arg.FromAccountID,
-		ToAccountID:   arg.ToAccountID,
-		Amount:        arg.Amount,
+func (q *Queries) TransferTx(ctx context.Context, arg procTransferTxParams) (res Transfertxresult, err error) {
+	res, err = q.procTransferTx(ctx, procTransferTxParams{
+		FromAcc: arg.FromAcc,
+		ToAcc:   arg.ToAcc,
+		Amount:  arg.Amount,
 	})
-	res = TransferTxResult{
-		FromAccountID: arg.FromAccountID,
-		ToAccountID:   arg.ToAccountID,
-		Amount:        arg.Amount,
-	}
+
 	return res, err
+
 }
