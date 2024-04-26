@@ -55,56 +55,7 @@ type TransferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
-var txKey = struct{}{}
-
-func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
-	var result TransferTxResult
-	err := store.execTx(ctx, func(q *Queries) error {
-		// Step 1. Create Transfer record
-		var err error
-
-		txName := ctx.Value(txKey)
-
-		fmt.Println(txName, "create transfer")
-		result.Transfer, err = q.CreateTransfer(ctx, CreateTransferParams{
-			FromAccountID: arg.FromAccountID,
-			ToAccountID:   arg.ToAccountID,
-			Amount:        arg.Amount,
-		})
-		if err != nil {
-			return err
-		}
-
-		// Step 2. Create two Entry records
-		fmt.Println(txName, "create entry 1")
-		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: arg.FromAccountID,
-			Amount:    -arg.Amount,
-		})
-		if err != nil {
-			return err
-		}
-
-		fmt.Println(txName, "create entry 2")
-		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: arg.ToAccountID,
-			Amount:    arg.Amount,
-		})
-		if err != nil {
-			return err
-		}
-
-		// TODO. Step 3. Update account's balance
-		// Меняем порядок вызова для пар аккаунтов
-		if arg.FromAccountID < arg.ToAccountID {
-			result.FromAccount, result.ToAccount, err = AddMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
-		} else {
-			result.ToAccount, result.FromAccount, err = AddMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
-		}
-		return err
-	})
-	return result, err
-}
+//var txKey = struct{}{}
 
 // AddMoney as code refactor
 func AddMoney(
@@ -131,4 +82,28 @@ func AddMoney(
 		return
 	}
 	return
+}
+
+// func (q *Queries) TransferTx(ctx context.Context, FromAccountID int64, ToAccountID int64, Amount int64) error {
+// 	err := q.procTransferTx(ctx, procTransferTxParams{
+// 		FromAccountID: FromAccountID,
+// 		ToAccountID:   ToAccountID,
+// 		Amount:        Amount,
+// 	})
+
+// 	return err
+// }
+
+func (q *Queries) TransferTx(ctx context.Context, arg procTransferTxParams) (res TransferTxResult, err error) {
+	err = q.procTransferTx(ctx, procTransferTxParams{
+		FromAccountID: arg.FromAccountID,
+		ToAccountID:   arg.ToAccountID,
+		Amount:        arg.Amount,
+	})
+	res = TransferTxResult{
+		FromAccountID: arg.FromAccountID,
+		ToAccountID:   arg.ToAccountID,
+		Amount:        arg.Amount,
+	}
+	return res, err
 }

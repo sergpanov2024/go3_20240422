@@ -141,28 +141,17 @@ func (q *Queries) UpdateTransfer(ctx context.Context, arg UpdateTransferParams) 
 	return i, err
 }
 
-const updateTransferFTA = `-- name: UpdateTransferFTA :one
-UPDATE transfers
-SET amount = $2, to_account_id = $3
-WHERE id = $1
-RETURNING id, from_account_id, to_account_id, amount, created_at
+const procTransferTx = `-- name: procTransferTx :exec
+call procTransferTx (  $1, $2, $3 )
 `
 
-type UpdateTransferFTAParams struct {
-	ID          int64 `json:"id"`
-	Amount      int64 `json:"amount"`
-	ToAccountID int64 `json:"to_account_id"`
+type procTransferTxParams struct {
+	FromAccountID int64 `json:"from_account_id"`
+	ToAccountID   int64 `json:"to_account_id"`
+	Amount  int64 `json:"amount"`
 }
 
-func (q *Queries) UpdateTransferFTA(ctx context.Context, arg UpdateTransferFTAParams) (Transfer, error) {
-	row := q.db.QueryRow(ctx, updateTransferFTA, arg.ID, arg.Amount, arg.ToAccountID)
-	var i Transfer
-	err := row.Scan(
-		&i.ID,
-		&i.FromAccountID,
-		&i.ToAccountID,
-		&i.Amount,
-		&i.CreatedAt,
-	)
-	return i, err
+func (q *Queries) procTransferTx(ctx context.Context, arg procTransferTxParams) error {
+	_, err := q.db.Exec(ctx, procTransferTx, arg.FromAccountID, arg.ToAccountID, arg.Amount)
+	return err
 }

@@ -7,6 +7,7 @@ INSERT INTO transfers (
     $1, $2, $3
 ) RETURNING *;
 
+
 -- name: GetTransfer :one
 SELECT * FROM transfers 
 WHERE id = $1 
@@ -27,11 +28,10 @@ SET amount = $2, to_account_id = $3
 WHERE id = $1
 RETURNING *;
 
--- name: UpdateTransferFTA :one
-UPDATE transfers
-SET amount = $2, to_account_id = $3
-WHERE id = $1
-RETURNING *;
+
+-- name: procTransferTx :exec
+call procTransferTx (  $1, $2, $3 );
+
 
 
 -- name: DeleteTransfer :exec

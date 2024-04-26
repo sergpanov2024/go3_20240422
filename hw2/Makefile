@@ -16,6 +16,9 @@ createdb:
 dropdb:
 	docker-compose exec db dropdb -U postgres bankstoredb
 
+psql:
+	docker-compose exec db psql -U postgres -d postgres bankstoredb
+
 migrateup1:
 	migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5435/bankstoredb?sslmode=disable" up 1
 
@@ -29,10 +32,10 @@ migratedown1:
 	migrate -path db/migrations -database "postgres://postgres:postgres@localhost:5435/bankstoredb?sslmode=disable" down 1
 
 sqlc:
-	sqlc generate
+	/home/user/go/bin/sqlc generate
 
 test:
-	go test -timeout 180s -v -cover ./... -count=1
+	go test -timeout 60s -v -cover ./... -count=1
 
 server:
 	go run main.go
