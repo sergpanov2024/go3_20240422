@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sergpanov2024/go3/util"
+	"github.com/sergpanov2024/go3/hw2/util"
 	"github.com/stretchr/testify/require"
 )
 

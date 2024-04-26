@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 	"time"
-	"github.com/sergpanov2024/go3/hw1/util"
+
 	"github.com/jackc/pgx/v5"
+	"github.com/sergpanov2024/go3/hw2/util"
 	"github.com/stretchr/testify/require"
 )
 
@@ -88,7 +89,7 @@ func TestListEntries(t *testing.T) {
 		createRandomEntry(t, acc)
 	}
 
-	arg :=  ListEntriesParams{
+	arg := ListEntriesParams{
 		AccountID: acc.ID,
 		Limit:     5,
 		Offset:    5,

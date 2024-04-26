@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/sergpanov2024/go3/hw2/util"
 	"github.com/stretchr/testify/require"
-	"github.com/sergpanov2024/go3/hw1/util"
 )
 
 func TestCreateAccount(t *testing.T) {
